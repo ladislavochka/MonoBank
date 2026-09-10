@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1>Редагування профілю</h1>
+
+
+<form
+    method="post"
+    enctype="multipart/form-data"
+>
+
+    {% csrf_token %}
+
+
+    <h2>Дані користувача</h2>
+
+    {{ user_form.as_p }}
+
+
+    <h2>Профіль</h2>
+
+    {{ profile_form.as_p }}
+
+
+    <button type="submit">
+        Зберегти зміни
+    </button>
+
+</form>
+
+
+<p>
+    <a href="{% url 'profile' %}">
+        Назад до профілю
+    </a>
+</p>
+
+{% endblock %}

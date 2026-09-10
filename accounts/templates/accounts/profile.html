@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1>Мій профіль</h1>
+
+
+{% if profile.avatar %}
+
+    <p>
+        <img
+            src="{{ profile.avatar.url }}"
+            alt="Фото профілю"
+        >
+    </p>
+
+{% endif %}
+
+
+<p>
+    <strong>Ім'я користувача:</strong>
+    {{ profile_user.username }}
+</p>
+
+
+<p>
+    <strong>Email:</strong>
+
+    {% if profile_user.email %}
+        {{ profile_user.email }}
+    {% else %}
+        Не вказано
+    {% endif %}
+</p>
+
+
+<p>
+    <strong>Про себе:</strong>
+
+    {% if profile.bio %}
+        {{ profile.bio }}
+    {% else %}
+        Не вказано
+    {% endif %}
+</p>
+
+
+<p>
+    <strong>Дата народження:</strong>
+
+    {% if profile.birth_date %}
+        {{ profile.birth_date|date:"d.m.Y" }}
+    {% else %}
+        Не вказано
+    {% endif %}
+</p>
+
+
+<p>
+    <strong>Профіль створено:</strong>
+    {{ profile.created_at|date:"d.m.Y H:i" }}
+</p>
+
+
+<p>
+    <a href="{% url 'profile_edit' %}">
+        Редагувати профіль
+    </a>
+</p>
+
+{% endblock %}

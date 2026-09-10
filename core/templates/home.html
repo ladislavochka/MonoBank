@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h1>Портал групи</h1>
+
+{% if user.is_authenticated %}
+
+    <h2>Вітаємо, {{ user.username }}!</h2>
+
+    <p>
+        Ви успішно авторизовані.
+    </p>
+
+    <p>
+        <a href="{% url 'profile' %}">
+            Перейти до профілю
+        </a>
+    </p>
+
+{% else %}
+
+    <p>
+        Ласкаво просимо до порталу групи!
+    </p>
+
+    <p>
+        <a href="{% url 'login' %}">
+            Увійти
+        </a>
+        або
+        <a href="{% url 'register' %}">
+            зареєструватися
+        </a>
+    </p>
+
+{% endif %}
+
+{% endblock %}

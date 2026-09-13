@@ -8,39 +8,35 @@
 
 <div class="container py-5">
 
-    <!-- HERO-БЛОК -->
+    <!-- HERO -->
     <section class="hero-section mb-5">
 
-        <div class="container">
+        <div class="row align-items-center">
 
-            <div class="row align-items-center">
+            <div class="col-12 col-lg-7">
 
-                <div class="col-12 col-lg-7">
+                <h1 class="hero-title">
+                    Портал нашої групи
+                </h1>
 
-                    <h1 class="hero-title">
-                        Портал нашої групи
-                    </h1>
+                <p class="hero-text">
+                    Місце, де зібрані новини, події,
+                    матеріали та життя нашої групи.
+                </p>
 
-                    <p class="hero-text">
-                        Місце, де зібрані новини, події,
-                        матеріали, проєкти та життя нашої групи.
-                    </p>
+                <a href="#news" class="btn btn-primary btn-lg">
+                    Переглянути новини
+                </a>
 
-                    <a href="#news" class="btn btn-primary btn-lg">
-                        Переглянути новини
-                    </a>
+            </div>
 
-                </div>
+            <div class="col-12 col-lg-5 mt-4 mt-lg-0">
 
-                <div class="col-12 col-lg-5 mt-4 mt-lg-0">
+                <div class="hero-image-placeholder">
 
-                    <div class="hero-image-placeholder">
-
-                        <span>
-                            Фото групи
-                        </span>
-
-                    </div>
+                    <span>
+                        Фото групи
+                    </span>
 
                 </div>
 
@@ -51,7 +47,7 @@
     </section>
 
 
-    <!-- Новини -->
+    <!-- НОВИНИ -->
     <section id="news" class="home-section mb-5">
 
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -60,7 +56,7 @@
                 Останні новини
             </h2>
 
-            <a href="#" class="btn btn-outline-primary">
+            <a href="#news" class="btn btn-outline-primary">
                 Усі новини
             </a>
 
@@ -68,36 +64,55 @@
 
         <div class="row g-4">
 
-            <div class="col-12 col-md-6 col-lg-4">
+            {% for item in news %}
 
-                <div class="card h-100">
+                <div class="col-12 col-md-6 col-lg-4">
 
-                    <div class="card-body">
+                    <div class="card h-100">
 
-                        <h5 class="card-title">
-                            Новина
-                        </h5>
+                        <div class="card-body">
 
-                        <p class="card-text text-muted">
-                            Тут буде короткий опис новини.
-                        </p>
+                            <h5 class="card-title">
+                                {{ item.title }}
+                            </h5>
 
-                        <a href="#" class="btn btn-primary">
-                            Детальніше
-                        </a>
+                            <p class="card-text text-muted">
+                                {{ item.description|truncatewords:20 }}
+                            </p>
+
+                            <p class="text-muted">
+                                {{ item.created_at|date:"d.m.Y H:i" }}
+                            </p>
+
+                            <a href="#"
+                               class="btn btn-primary">
+                                Детальніше
+                            </a>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
+            {% empty %}
+
+                <div class="col-12">
+
+                    <div class="alert alert-info">
+                        Поки що немає доступних новин.
+                    </div>
+
+                </div>
+
+            {% endfor %}
 
         </div>
 
     </section>
 
 
-    <!-- Події -->
+    <!-- ПОДІЇ -->
     <section class="home-section mb-5">
 
         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -106,125 +121,194 @@
                 Найближчі події
             </h2>
 
-            <a href="#" class="btn btn-outline-primary">
-                Відкрити календар
+            <a href="#events"
+               class="btn btn-outline-primary">
+                Усі події
             </a>
 
         </div>
 
-        <div class="row g-4">
+        <div id="events" class="row g-4">
 
-            <div class="col-12 col-md-6 col-lg-4">
+            {% for event in events %}
 
-                <div class="card h-100">
+                <div class="col-12 col-md-6 col-lg-4">
 
-                    <div class="card-body">
+                    <div class="card h-100">
 
-                        <h5 class="card-title">
-                            Подія
-                        </h5>
+                        <div class="card-body">
 
-                        <p class="card-text text-muted">
-                            Тут буде коротка інформація про подію.
-                        </p>
+                            <h5 class="card-title">
+                                {{ event.title }}
+                            </h5>
 
-                        <a href="#" class="btn btn-primary">
-                            Детальніше
-                        </a>
+                            <p class="card-text">
+                                {{ event.description|truncatewords:20 }}
+                            </p>
+
+                            <p class="text-muted">
+                                Дата:
+                                {{ event.date|date:"d.m.Y H:i" }}
+                            </p>
+
+                            {% if event.location %}
+
+                                <p class="text-muted">
+                                    Місце:
+                                    {{ event.location }}
+                                </p>
+
+                            {% endif %}
+
+                            <a href="#"
+                               class="btn btn-primary">
+                                Детальніше
+                            </a>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
+            {% empty %}
+
+                <div class="col-12">
+
+                    <div class="alert alert-info">
+                        Поки що немає доступних подій.
+                    </div>
+
+                </div>
+
+            {% endfor %}
 
         </div>
 
     </section>
 
 
-    <!-- Оголошення -->
+    <!-- ОГОЛОШЕННЯ -->
     <section class="home-section mb-5">
 
         <div class="d-flex justify-content-between align-items-center mb-3">
 
             <h2>
-                Оголошення
+                Актуальні оголошення
             </h2>
 
         </div>
 
         <div class="row g-4">
 
-            <div class="col-12 col-md-6 col-lg-4">
+            {% for announcement in announcements %}
 
-                <div class="card h-100">
+                <div class="col-12 col-md-6 col-lg-4">
 
-                    <div class="card-body">
+                    <div class="card h-100">
 
-                        <h5 class="card-title">
-                            Оголошення
-                        </h5>
+                        <div class="card-body">
 
-                        <p class="card-text text-muted">
-                            Тут буде текст оголошення.
-                        </p>
+                            <h5 class="card-title">
+                                {{ announcement.title }}
+                            </h5>
 
-                        <a href="#" class="btn btn-primary">
-                            Детальніше
-                        </a>
+                            <p class="card-text">
+                                {{ announcement.description|truncatewords:20 }}
+                            </p>
+
+                            <p class="text-muted">
+                                {{ announcement.created_at|date:"d.m.Y H:i" }}
+                            </p>
+
+                            <a href="#"
+                               class="btn btn-primary">
+                                Детальніше
+                            </a>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
+            {% empty %}
+
+                <div class="col-12">
+
+                    <div class="alert alert-info">
+                        Поки що немає доступних оголошень.
+                    </div>
+
+                </div>
+
+            {% endfor %}
 
         </div>
 
     </section>
 
 
-    <!-- Матеріали -->
+    <!-- МАТЕРІАЛИ -->
     <section class="home-section mb-5">
 
         <div class="d-flex justify-content-between align-items-center mb-3">
 
             <h2>
-                Корисні матеріали
+                Останні матеріали
             </h2>
 
-            <a href="#" class="btn btn-outline-primary">
+            <a href="#materials"
+               class="btn btn-outline-primary">
                 Усі матеріали
             </a>
 
         </div>
 
-        <div class="row g-4">
+        <div id="materials" class="row g-4">
 
-            <div class="col-12 col-md-6 col-lg-4">
+            {% for material in materials %}
 
-                <div class="card h-100">
+                <div class="col-12 col-md-6 col-lg-4">
 
-                    <div class="card-body">
+                    <div class="card h-100">
 
-                        <h5 class="card-title">
-                            Матеріал
-                        </h5>
+                        <div class="card-body">
 
-                        <p class="card-text text-muted">
-                            Тут буде короткий опис матеріалу.
-                        </p>
+                            <h5 class="card-title">
+                                {{ material.title }}
+                            </h5>
 
-                        <a href="#" class="btn btn-primary">
-                            Переглянути
-                        </a>
+                            <p class="card-text">
+                                {{ material.description|truncatewords:20 }}
+                            </p>
+
+                            <p class="text-muted">
+                                {{ material.created_at|date:"d.m.Y H:i" }}
+                            </p>
+
+                            <a href="#"
+                               class="btn btn-primary">
+                                Переглянути
+                            </a>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
+            {% empty %}
+
+                <div class="col-12">
+
+                    <div class="alert alert-info">
+                        Поки що немає доступних матеріалів.
+                    </div>
+
+                </div>
+
+            {% endfor %}
 
         </div>
 

@@ -424,3 +424,141 @@ a {
         min-height: 180px;
     }
 }
+
+/* =========================
+   HOME PAGE FINAL STYLES
+========================= */
+
+.home-section {
+    scroll-margin-top: 90px;
+}
+
+.home-section h2 {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+
+/* КАРТОЧКИ */
+
+.home-section .card {
+    height: 100%;
+
+    border: none;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+
+    transition: 0.2s;
+}
+
+.home-section .card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+}
+
+.home-section .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.home-section .card-title {
+    font-weight: 700;
+}
+
+.home-section .card-text {
+    flex-grow: 1;
+}
+
+.home-section .card-body > .btn {
+    align-self: flex-start;
+}
+
+
+/* ДАТЫ И ДОП. ИНФОРМАЦИЯ */
+
+.home-section .text-muted {
+    font-size: 14px;
+}
+
+
+/* HERO */
+
+.hero-section {
+    overflow: hidden;
+}
+
+.hero-section .btn-lg {
+    padding: 12px 24px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+    .home-section .d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+
+        gap: 12px;
+    }
+
+    .home-section .btn-outline-primary {
+        width: 100%;
+    }
+
+    .hero-title {
+        font-size: 36px;
+    }
+
+    .hero-text {
+        font-size: 17px;
+    }
+}
+
+
+/* =========================
+   PHONE
+========================= */
+
+@media (max-width: 576px) {
+
+    .container.py-5 {
+        padding-top: 25px !important;
+        padding-bottom: 25px !important;
+    }
+
+    .home-section {
+        margin-bottom: 35px !important;
+    }
+
+    .home-section h2 {
+        font-size: 25px;
+    }
+
+    .home-section .card {
+        border-radius: 12px;
+    }
+
+    .home-section .btn {
+        width: 100%;
+    }
+
+    .hero-title {
+        font-size: 30px;
+    }
+
+    .hero-text {
+        font-size: 16px;
+    }
+
+    .hero-image-placeholder {
+        min-height: 160px;
+
+        font-size: 18px;
+    }
+}

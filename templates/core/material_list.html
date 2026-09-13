@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Матеріали | MonoBank
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h1>
+            Усі матеріали
+        </h1>
+
+        <a href="{% url 'home' %}"
+           class="btn btn-outline-primary">
+            На головну
+        </a>
+
+    </div>
+
+    <div class="row g-4">
+
+        {% for material in materials %}
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="card h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            {{ material.title }}
+                        </h5>
+
+                        <p class="card-text">
+                            {{ material.description|truncatewords:30 }}
+                        </p>
+
+                        <p class="text-muted">
+                            {{ material.created_at|date:"d.m.Y H:i" }}
+                        </p>
+
+                        <a href="{% url 'material_detail' material.pk %}"
+                           class="btn btn-primary">
+                            Переглянути
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="col-12">
+
+                <div class="alert alert-info">
+                    Поки що немає матеріалів.
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

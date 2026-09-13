@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ material.title }} | MonoBank
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <a href="{% url 'material_list' %}"
+       class="btn btn-outline-primary mb-4">
+        ← До матеріалів
+    </a>
+
+    <article>
+
+        <h1>
+            {{ material.title }}
+        </h1>
+
+        <p class="text-muted">
+            {{ material.created_at|date:"d.m.Y H:i" }}
+        </p>
+
+        <hr>
+
+        <p>
+            {{ material.description }}
+        </p>
+
+    </article>
+
+</div>
+
+{% endblock %}

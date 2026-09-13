@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ news.title }} | MonoBank
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <a href="{% url 'news_list' %}"
+       class="btn btn-outline-primary mb-4">
+        ← До новин
+    </a>
+
+    <article>
+
+        <h1>
+            {{ news.title }}
+        </h1>
+
+        <p class="text-muted">
+            {{ news.created_at|date:"d.m.Y H:i" }}
+        </p>
+
+        <hr>
+
+        <p>
+            {{ news.description }}
+        </p>
+
+    </article>
+
+</div>
+
+{% endblock %}

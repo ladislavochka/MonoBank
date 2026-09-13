@@ -24,7 +24,8 @@
                     матеріали та життя нашої групи.
                 </p>
 
-                <a href="#news" class="btn btn-primary btn-lg">
+                <a href="{% url 'news_list' %}"
+                   class="btn btn-primary btn-lg">
                     Переглянути новини
                 </a>
 
@@ -48,7 +49,7 @@
 
 
     <!-- НОВИНИ -->
-    <section id="news" class="home-section mb-5">
+    <section class="home-section mb-5">
 
         <div class="d-flex justify-content-between align-items-center mb-3">
 
@@ -56,7 +57,8 @@
                 Останні новини
             </h2>
 
-            <a href="#news" class="btn btn-outline-primary">
+            <a href="{% url 'news_list' %}"
+               class="btn btn-outline-primary">
                 Усі новини
             </a>
 
@@ -84,7 +86,7 @@
                                 {{ item.created_at|date:"d.m.Y H:i" }}
                             </p>
 
-                            <a href="#"
+                            <a href="{% url 'news_detail' item.pk %}"
                                class="btn btn-primary">
                                 Детальніше
                             </a>
@@ -121,14 +123,14 @@
                 Найближчі події
             </h2>
 
-            <a href="#events"
+            <a href="{% url 'event_list' %}"
                class="btn btn-outline-primary">
                 Усі події
             </a>
 
         </div>
 
-        <div id="events" class="row g-4">
+        <div class="row g-4">
 
             {% for event in events %}
 
@@ -160,7 +162,7 @@
 
                             {% endif %}
 
-                            <a href="#"
+                            <a href="{% url 'event_detail' event.pk %}"
                                class="btn btn-primary">
                                 Детальніше
                             </a>
@@ -197,6 +199,11 @@
                 Актуальні оголошення
             </h2>
 
+            <a href="{% url 'announcement_list' %}"
+               class="btn btn-outline-primary">
+                Усі оголошення
+            </a>
+
         </div>
 
         <div class="row g-4">
@@ -221,7 +228,7 @@
                                 {{ announcement.created_at|date:"d.m.Y H:i" }}
                             </p>
 
-                            <a href="#"
+                            <a href="{% url 'announcement_detail' announcement.pk %}"
                                class="btn btn-primary">
                                 Детальніше
                             </a>
@@ -258,14 +265,14 @@
                 Останні матеріали
             </h2>
 
-            <a href="#materials"
+            <a href="{% url 'material_list' %}"
                class="btn btn-outline-primary">
                 Усі матеріали
             </a>
 
         </div>
 
-        <div id="materials" class="row g-4">
+        <div class="row g-4">
 
             {% for material in materials %}
 
@@ -287,7 +294,7 @@
                                 {{ material.created_at|date:"d.m.Y H:i" }}
                             </p>
 
-                            <a href="#"
+                            <a href="{% url 'material_detail' material.pk %}"
                                class="btn btn-primary">
                                 Переглянути
                             </a>

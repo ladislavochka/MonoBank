@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ announcement.title }} | MonoBank
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <a href="{% url 'announcement_list' %}"
+       class="btn btn-outline-primary mb-4">
+        ← До оголошень
+    </a>
+
+    <article>
+
+        <h1>
+            {{ announcement.title }}
+        </h1>
+
+        <p class="text-muted">
+            {{ announcement.created_at|date:"d.m.Y H:i" }}
+        </p>
+
+        <hr>
+
+        <p>
+            {{ announcement.description }}
+        </p>
+
+    </article>
+
+</div>
+
+{% endblock %}

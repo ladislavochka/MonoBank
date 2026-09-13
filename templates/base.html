@@ -19,161 +19,152 @@
 
 <body>
 
-<header>
+    <header>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
 
-            <a class="navbar-brand fw-bold" href="{% url 'home' %}">
-                MonoBank
-            </a>
+                <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+                    MonoBank
+                </a>
 
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarMenu"
-                aria-controls="navbarMenu"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarMenu"
+                    aria-controls="navbarMenu"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarMenu">
+                <div class="collapse navbar-collapse" id="navbarMenu">
 
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                    <li class="nav-item">
-                        <a
-                            class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                            href="{% url 'home' %}"
-                        >
-                            Головна
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Форум
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Події
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Матеріали
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Портфоліо
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Галерея
-                        </a>
-                    </li>
-
-                </ul>
-
-
-                <ul class="navbar-nav align-items-lg-center">
-
-                    {% if user.is_authenticated %}
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                         <li class="nav-item">
                             <a
-                                class="nav-link {% if request.resolver_match.url_name == 'profile' or request.resolver_match.url_name == 'profile_edit' %}active{% endif %}"
-                                href="{% url 'profile' %}"
+                                class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                                href="{% url 'home' %}"
                             >
-                                Профіль
+                                Головна
                             </a>
                         </li>
 
-                        <li class="nav-item ms-lg-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Форум
+                            </a>
+                        </li>
 
-                            <form
-                                method="post"
-                                action="{% url 'logout' %}"
-                            >
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Події
+                            </a>
+                        </li>
 
-                                {% csrf_token %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Матеріали
+                            </a>
+                        </li>
 
-                                <button
-                                    type="submit"
-                                    class="btn btn-outline-light"
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Портфоліо
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Галерея
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+                    <ul class="navbar-nav align-items-lg-center">
+
+                        {% if user.is_authenticated %}
+
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link {% if request.resolver_match.url_name == 'profile' or request.resolver_match.url_name == 'profile_edit' %}active{% endif %}"
+                                    href="{% url 'profile' %}"
                                 >
-                                    Вийти
-                                </button>
+                                    Профіль
+                                </a>
+                            </li>
 
-                            </form>
+                            <li class="nav-item ms-lg-2">
 
-                        </li>
+                                <form
+                                    method="post"
+                                    action="{% url 'logout' %}"
+                                >
 
-                    {% else %}
+                                    {% csrf_token %}
 
-                        <li class="nav-item">
-                            <a
-                                class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}"
-                                href="{% url 'login' %}"
-                            >
-                                Вхід
-                            </a>
-                        </li>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-light"
+                                    >
+                                        Вийти
+                                    </button>
 
-                        <li class="nav-item ms-lg-2">
-                            <a
-                                class="btn btn-primary"
-                                href="{% url 'register' %}"
-                            >
-                                Реєстрація
-                            </a>
-                        </li>
+                                </form>
 
-                    {% endif %}
+                            </li>
 
-                </ul>
+                        {% else %}
+
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}"
+                                    href="{% url 'login' %}"
+                                >
+                                    Вхід
+                                </a>
+                            </li>
+
+                            <li class="nav-item ms-lg-2">
+                                <a
+                                    class="btn btn-primary"
+                                    href="{% url 'register' %}"
+                                >
+                                    Реєстрація
+                                </a>
+                            </li>
+
+                        {% endif %}
+
+                    </ul>
+
+                </div>
 
             </div>
+        </nav>
 
-        </div>
-    </nav>
-
-</header>
+    </header>
 
 
 <main>
-
     {% block content %}
-
     {% endblock %}
-
 </main>
 
 
 <footer class="site-footer">
-    <div class="container">
 
-        <div class="text-end">
-            <p class="mb-1">
-                © 2026 MonoBank
-            </p>
-
-            <p class="mb-0">
-                Автори: Нікіта Р., Владислав М., Андрій
-            </p>
-        </div>
-
+    <div class="container text-center">
+        <p>
+            © 2026 MonoBank &nbsp; Автори: Нікіта Р., Владислав М., Андрій
+        </p>
     </div>
+
 </footer>
 
 

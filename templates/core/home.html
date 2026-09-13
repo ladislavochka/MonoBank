@@ -1,30 +1,21 @@
 {% extends 'base.html' %}
 
+{% block title %}
+Головна | MonoBank
+{% endblock %}
 
 {% block content %}
 
-<h1>Портал групи</h1>
+<div class="home-content">
 
-{% if user.is_authenticated %}
-
-    <h2>Вітаємо, {{ user.username }}!</h2>
-
-    <p>
-        Ви успішно авторизовані.
-    </p>
-
-    <p>
-        <a href="{% url 'profile' %}">
-            Перейти до профілю
-        </a>
-    </p>
-
-{% else %}
+    <h1>
+        Портал групи
+    </h1>
 
     <p>
         Ласкаво просимо до порталу групи!
     </p>
 
-{% endif %}
+</div>
 
 {% endblock %}

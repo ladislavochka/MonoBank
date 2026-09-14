@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from django.views.generic import (
     TemplateView,
@@ -10,6 +11,7 @@ from .models import (
     Event,
     Announcement,
     Material,
+    Grade,
 )
 
 
@@ -100,3 +102,81 @@ class MaterialDetailView(DetailView):
     model = Material
     template_name = 'core/material_detail.html'
     context_object_name = 'material'
+
+
+class GradeListView(LoginRequiredMixin, ListView):
+    model = Grade
+    template_name = 'core/grade_list.html'
+    context_object_name = 'grades'
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            queryset = Grade.objects.select_related(
+                'student'
+            )
+        else:
+            queryset = Grade.objects.filter(
+                student=self.request.user
+            )
+
+        subject = self.request.GET.get('subject', '').strip()
+
+        if subject:
+            queryset = queryset.filter(
+                subject__icontains=subject
+            )
+
+        if self.request.user.is_staff:
+            student = self.request.GET.get(
+                'student',
+                ''
+            ).strip()
+
+            if student:
+                queryset = queryset.filter(
+                    student__username__icontains=student
+                )
+
+        sort = self.request.GET.get(
+            'sort',
+            '-date_received'
+        )
+
+        allowed_sorting = {
+            'date': 'date_received',
+            '-date': '-date_received',
+            'subject': 'subject',
+            '-subject': '-subject',
+            'grade': 'grade',
+            '-grade': '-grade',
+        }
+
+        order_by = allowed_sorting.get(
+            sort,
+            '-date_received'
+        )
+
+        return queryset.order_by(
+            order_by,
+            '-id'
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['selected_subject'] = (
+            self.request.GET.get('subject', '')
+        )
+
+        context['selected_student'] = (
+            self.request.GET.get('student', '')
+        )
+
+        context['selected_sort'] = (
+            self.request.GET.get(
+                'sort',
+                '-date_received'
+            )
+        )
+
+        return context

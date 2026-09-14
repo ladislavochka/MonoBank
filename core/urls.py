@@ -10,6 +10,7 @@ from .views import (
     AnnouncementDetailView,
     MaterialListView,
     MaterialDetailView,
+    GradeListView,
 )
 
 
@@ -25,6 +26,7 @@ urlpatterns = [
         NewsListView.as_view(),
         name='news_list'
     ),
+
     path(
         'news/<int:pk>/',
         NewsDetailView.as_view(),
@@ -36,6 +38,7 @@ urlpatterns = [
         EventListView.as_view(),
         name='event_list'
     ),
+
     path(
         'events/<int:pk>/',
         EventDetailView.as_view(),
@@ -47,6 +50,7 @@ urlpatterns = [
         AnnouncementListView.as_view(),
         name='announcement_list'
     ),
+
     path(
         'announcements/<int:pk>/',
         AnnouncementDetailView.as_view(),
@@ -58,9 +62,16 @@ urlpatterns = [
         MaterialListView.as_view(),
         name='material_list'
     ),
+
     path(
         'materials/<int:pk>/',
         MaterialDetailView.as_view(),
         name='material_detail'
+    ),
+
+    path(
+        'grades/',
+        GradeListView.as_view(),
+        name='grade_list'
     ),
 ]

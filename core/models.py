@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 
@@ -73,3 +75,47 @@ class Material(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Grade(models.Model):
+    student = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='grades',
+        verbose_name='Учень'
+    )
+
+    subject = models.CharField(
+        max_length=100,
+        verbose_name='Предмет'
+    )
+
+    grade = models.PositiveSmallIntegerField(
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(12),
+        ],
+        verbose_name='Оцінка'
+    )
+
+    date_received = models.DateField(
+        verbose_name='Дата отримання оцінки'
+    )
+
+    work_title = models.CharField(
+        max_length=200,
+        verbose_name='Назва роботи / тема'
+    )
+
+    teacher_comment = models.TextField(
+        blank=True,
+        verbose_name='Коментар викладача'
+    )
+
+    class Meta:
+        ordering = ['-date_received', '-id']
+        verbose_name = 'Оцінка'
+        verbose_name_plural = 'Оцінки'
+
+    def __str__(self):
+        return f'{self.student.username} — {self.subject}: {self.grade}'

@@ -1,32 +1,70 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Електронний щоденник
+Електронний щоденник | MonoBank
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<div class="container py-5 grade-page">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- ЗАГОЛОВОК -->
+    <div class="grade-header mb-4">
+
         <div>
-            <h1 class="mb-1">Електронний щоденник</h1>
-            <p class="text-muted mb-0">
-                Перегляд оцінок
+            <h1 class="grade-title">
+                Електронний щоденник
+            </h1>
+
+            <p class="grade-subtitle">
+                Перегляд оцінок, робіт та результатів навчання
             </p>
         </div>
+
     </div>
 
 
-    <div class="card shadow-sm mb-4">
+    <!-- ИНФОРМАЦИЯ ОБ УЧЕНИКЕ -->
+    <div class="grade-student-card mb-4">
 
-        <div class="card-body">
+        <div class="grade-student-icon">
+            {{ user.username|first|upper }}
+        </div>
+
+        <div>
+
+            <span class="grade-student-label">
+                {% if user.is_staff %}
+                    Користувач:
+                {% else %}
+                    Учень:
+                {% endif %}
+            </span>
+
+            <div class="grade-student-name">
+                {% if user.first_name or user.last_name %}
+                    {{ user.first_name }} {{ user.last_name }}
+                {% else %}
+                    {{ user.username }}
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ФИЛЬТРЫ -->
+    <div class="card grade-filter-card mb-4">
+
+        <div class="card-body p-4">
 
             <form method="get">
 
-                <div class="row g-3">
+                <div class="row g-3 align-items-end">
 
-                    <div class="col-md-4">
+                    <!-- ПРЕДМЕТ -->
+                    <div class="col-12 col-md-4">
 
                         <label
                             for="subject"
@@ -41,15 +79,16 @@
                             id="subject"
                             class="form-control"
                             value="{{ selected_subject }}"
-                            placeholder="Наприклад: Математика"
+                            placeholder="Наприклад: Python"
                         >
 
                     </div>
 
 
+                    <!-- УЧЕНИК ДЛЯ АДМИНА -->
                     {% if user.is_staff %}
 
-                        <div class="col-md-4">
+                        <div class="col-12 col-md-4">
 
                             <label
                                 for="student"
@@ -72,7 +111,8 @@
                     {% endif %}
 
 
-                    <div class="col-md-4">
+                    <!-- СОРТИРОВКА -->
+                    <div class="col-12 col-md-4">
 
                         <label
                             for="sort"
@@ -88,12 +128,12 @@
                         >
 
                             <option
-                                value="-date_received"
-                                {% if selected_sort == '-date_received' %}
+                                value="-date"
+                                {% if selected_sort == '-date' %}
                                     selected
                                 {% endif %}
                             >
-                                Нові оцінки першими
+                                Нові спочатку
                             </option>
 
                             <option
@@ -102,43 +142,7 @@
                                     selected
                                 {% endif %}
                             >
-                                За датою ↑
-                            </option>
-
-                            <option
-                                value="-date"
-                                {% if selected_sort == '-date' %}
-                                    selected
-                                {% endif %}
-                            >
-                                За датою ↓
-                            </option>
-
-                            <option
-                                value="subject"
-                                {% if selected_sort == 'subject' %}
-                                    selected
-                                {% endif %}
-                            >
-                                За предметом А-Я
-                            </option>
-
-                            <option
-                                value="-subject"
-                                {% if selected_sort == '-subject' %}
-                                    selected
-                                {% endif %}
-                            >
-                                За предметом Я-А
-                            </option>
-
-                            <option
-                                value="grade"
-                                {% if selected_sort == 'grade' %}
-                                    selected
-                                {% endif %}
-                            >
-                                Оцінка ↑
+                                Старі спочатку
                             </option>
 
                             <option
@@ -147,7 +151,34 @@
                                     selected
                                 {% endif %}
                             >
-                                Оцінка ↓
+                                Від найвищої оцінки
+                            </option>
+
+                            <option
+                                value="grade"
+                                {% if selected_sort == 'grade' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Від найнижчої оцінки
+                            </option>
+
+                            <option
+                                value="subject"
+                                {% if selected_sort == 'subject' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Предмет А–Я
+                            </option>
+
+                            <option
+                                value="-subject"
+                                {% if selected_sort == '-subject' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Предмет Я–А
                             </option>
 
                         </select>
@@ -157,7 +188,7 @@
                 </div>
 
 
-                <div class="mt-3">
+                <div class="grade-filter-actions mt-3">
 
                     <button
                         type="submit"
@@ -182,107 +213,125 @@
     </div>
 
 
+    <!-- ТАБЛИЦА -->
     {% if grades %}
 
-        <div class="table-responsive">
+        <div class="grade-table-card">
 
-            <table class="table table-bordered table-hover align-middle">
+            <div class="table-responsive">
 
-                <thead class="table-dark">
+                <table class="table grade-table align-middle mb-0">
 
-                    <tr>
-
-                        {% if user.is_staff %}
-                            <th>Учень</th>
-                        {% endif %}
-
-                        <th>Предмет</th>
-                        <th>Оцінка</th>
-                        <th>Дата</th>
-                        <th>Робота / тема</th>
-                        <th>Коментар</th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                    {% for grade in grades %}
+                    <thead>
 
                         <tr>
 
                             {% if user.is_staff %}
-
-                                <td>
-                                    {{ grade.student.username }}
-                                </td>
-
+                                <th>Учень</th>
                             {% endif %}
 
-
-                            <td>
-                                {{ grade.subject }}
-                            </td>
-
-
-                            <td>
-
-                                <span class="badge
-                                    {% if grade.grade >= 10 %}
-                                        bg-success
-                                    {% elif grade.grade >= 7 %}
-                                        bg-primary
-                                    {% elif grade.grade >= 4 %}
-                                        bg-warning text-dark
-                                    {% else %}
-                                        bg-danger
-                                    {% endif %}
-                                ">
-                                    {{ grade.grade }}
-                                </span>
-
-                            </td>
-
-
-                            <td>
-                                {{ grade.date_received|date:"d.m.Y" }}
-                            </td>
-
-
-                            <td>
-                                {{ grade.work_title }}
-                            </td>
-
-
-                            <td>
-
-                                {% if grade.teacher_comment %}
-                                    {{ grade.teacher_comment }}
-                                {% else %}
-                                    <span class="text-muted">
-                                        —
-                                    </span>
-                                {% endif %}
-
-                            </td>
+                            <th>Предмет</th>
+                            <th>Назва роботи</th>
+                            <th>Оцінка</th>
+                            <th>Дата</th>
+                            <th>Коментар</th>
 
                         </tr>
 
-                    {% endfor %}
+                    </thead>
 
-                </tbody>
 
-            </table>
+                    <tbody>
+
+                        {% for grade in grades %}
+
+                            <tr>
+
+                                {% if user.is_staff %}
+
+                                    <td>
+                                        <strong>
+                                            {{ grade.student.username }}
+                                        </strong>
+                                    </td>
+
+                                {% endif %}
+
+
+                                <td>
+                                    <strong>
+                                        {{ grade.subject }}
+                                    </strong>
+                                </td>
+
+
+                                <td>
+                                    {{ grade.work_title }}
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="
+                                            grade-badge
+
+                                            {% if grade.grade >= 10 %}
+                                                grade-high
+                                            {% elif grade.grade >= 7 %}
+                                                grade-medium
+                                            {% elif grade.grade >= 4 %}
+                                                grade-low
+                                            {% else %}
+                                                grade-critical
+                                            {% endif %}
+                                        "
+                                    >
+                                        {{ grade.grade }}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+                                    {{ grade.date_received|date:"d.m.Y" }}
+                                </td>
+
+
+                                <td>
+
+                                    {% if grade.teacher_comment %}
+
+                                        {{ grade.teacher_comment }}
+
+                                    {% else %}
+
+                                        <span class="text-muted">
+                                            —
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </div>
 
+
     {% else %}
 
-        <div class="alert alert-info">
+        <div class="alert alert-info grade-empty">
 
-            Оцінок за вибраними параметрами не знайдено.
+            За вибраними параметрами оцінок не знайдено.
 
         </div>
 

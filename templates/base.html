@@ -54,7 +54,10 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a
+                                class="nav-link {% if request.resolver_match.url_name == 'topic_list' or request.resolver_match.url_name == 'topic_detail' %}active{% endif %}"
+                                href="{% url 'forum:topic_list' %}"
+                            >
                                 Форум
                             </a>
                         </li>

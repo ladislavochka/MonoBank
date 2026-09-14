@@ -35,6 +35,11 @@ urlpatterns = [
         'accounts/',
         include('accounts.urls')
     ),
+
+    path(
+        'forum/',
+        include('forum.urls')
+    ),
 ]
 
 

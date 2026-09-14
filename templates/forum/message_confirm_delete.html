@@ -1,49 +1,55 @@
 {% extends 'base.html' %}
 
-{% block title %}Видалення повідомлення{% endblock %}
+{% block title %}
+Видалення повідомлення | MonoBank
+{% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<div class="container py-5 forum-page">
 
     <div class="row justify-content-center">
 
-        <div class="col-lg-6">
+        <div class="col-12 col-md-9 col-lg-6">
 
-            <div class="card">
+            <div class="card forum-delete-card">
 
-                <div class="card-body">
+                <div class="card-body p-4 p-md-5">
 
-                    <h2 class="card-title mb-3">
+                    <h2 class="mb-3">
                         Видалити повідомлення?
                     </h2>
 
-                    <p>
+                    <p class="text-muted">
                         Ви дійсно хочете видалити це повідомлення?
+                        Цю дію не можна буде скасувати.
                     </p>
 
-                    <div class="alert alert-secondary">
+                    <div class="forum-delete-message">
                         {{ object.text }}
                     </div>
-
 
                     <form method="post">
 
                         {% csrf_token %}
 
-                        <button
-                            type="submit"
-                            class="btn btn-danger"
-                        >
-                            Так, видалити
-                        </button>
+                        <div class="forum-form-actions mt-4">
 
-                        <a
-                            href="{% url 'forum:topic_detail' object.topic.pk %}"
-                            class="btn btn-secondary"
-                        >
-                            Скасувати
-                        </a>
+                            <a
+                                href="{% url 'forum:topic_detail' object.topic.pk %}"
+                                class="btn btn-outline-secondary"
+                            >
+                                Скасувати
+                            </a>
+
+                            <button
+                                type="submit"
+                                class="btn btn-danger"
+                            >
+                                Так, видалити
+                            </button>
+
+                        </div>
 
                     </form>
 

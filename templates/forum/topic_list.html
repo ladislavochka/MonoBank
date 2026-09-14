@@ -1,67 +1,83 @@
 {% extends 'base.html' %}
 
-{% block title %}Форум{% endblock %}
+{% block title %}
+Форум | MonoBank
+{% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<div class="container py-5 forum-page">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="forum-header">
+
         <div>
-            <h1>Форум</h1>
-            <p class="text-muted">
-                Обговорення та спілкування учасників групи
+            <h1 class="forum-title">
+                Форум
+            </h1>
+
+            <p class="forum-subtitle">
+                Обговорення, питання та спілкування учасників групи
             </p>
         </div>
 
         {% if user.is_authenticated %}
+
             <a
                 href="{% url 'forum:topic_create' %}"
                 class="btn btn-primary"
             >
-                Створити тему
+                + Створити тему
             </a>
+
         {% endif %}
+
     </div>
 
 
     {% if topics %}
 
-        <div class="list-group">
+        <div class="forum-topic-list">
 
             {% for topic in topics %}
 
                 <a
                     href="{% url 'forum:topic_detail' topic.pk %}"
-                    class="list-group-item list-group-item-action"
+                    class="forum-topic-card"
                 >
 
-                    <div
-                        class="d-flex justify-content-between align-items-start"
-                    >
+                    <div class="forum-topic-main">
 
-                        <div>
+                        <h5 class="forum-topic-title">
+                            {{ topic.title }}
+                        </h5>
 
-                            <h5 class="mb-1">
-                                {{ topic.title }}
-                            </h5>
+                        <div class="forum-topic-meta">
 
-                            <p class="mb-1">
+                            <span>
                                 Автор:
                                 <strong>
                                     {{ topic.author.username }}
                                 </strong>
-                            </p>
+                            </span>
 
-                            <small class="text-muted">
+                            <span>
                                 {{ topic.created_at|date:"d.m.Y H:i" }}
-                            </small>
+                            </span>
 
                         </div>
 
-                        <span class="badge bg-secondary rounded-pill">
-                            {{ topic.message_count }} повідомлень
+                    </div>
+
+
+                    <div class="forum-topic-count">
+
+                        <span class="badge bg-primary">
+                            {{ topic.message_count }}
                         </span>
+
+                        <small>
+                            повідомлень
+                        </small>
 
                     </div>
 
@@ -74,10 +90,13 @@
     {% else %}
 
         <div class="alert alert-info">
-            Поки що тем немає.
+
+            Поки що тем на форумі немає.
+
             {% if user.is_authenticated %}
-                Створіть першу тему!
+                Ви можете створити першу тему.
             {% endif %}
+
         </div>
 
     {% endif %}

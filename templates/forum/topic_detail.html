@@ -1,90 +1,152 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ topic.title }}{% endblock %}
+{% block title %}
+{{ topic.title }} | MonoBank
+{% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<div class="container py-5 forum-page">
 
-    <div class="mb-4">
+    <!-- ВЕРНУТЬСЯ НА ФОРУМ -->
+    <a
+        href="{% url 'forum:topic_list' %}"
+        class="btn btn-outline-secondary mb-4"
+    >
+        ← До форуму
+    </a>
 
-        <a
-            href="{% url 'forum:topic_list' %}"
-            class="btn btn-outline-secondary mb-3"
-        >
-            ← До форуму
-        </a>
 
-        <h1>{{ topic.title }}</h1>
+    <!-- ЗАГОЛОВОК ТЕМЫ -->
+    <div class="forum-topic-header mb-4">
 
-        <p class="text-muted">
+        <h1>
+            {{ topic.title }}
+        </h1>
+
+        <p class="text-muted mb-0">
             Автор:
             <strong>{{ topic.author.username }}</strong>
-            |
+
+            ·
+
             {{ topic.created_at|date:"d.m.Y H:i" }}
         </p>
 
     </div>
 
 
-    <div class="card mb-4">
+    <!-- ПЕРВОЕ СООБЩЕНИЕ ТЕМЫ -->
+    <div class="forum-message forum-first-message mb-4">
 
-        <div class="card-body">
+        <div class="forum-message-user">
 
-            <h5 class="card-title">
-                {{ topic.author.username }}
-            </h5>
+            {% if topic.author.profile.avatar %}
 
-            <p class="text-muted">
-                {{ topic.created_at|date:"d.m.Y H:i" }}
-            </p>
+                <img
+                    src="{{ topic.author.profile.avatar.url }}"
+                    alt="{{ topic.author.username }}"
+                    class="forum-avatar"
+                >
+
+            {% else %}
+
+                <div class="forum-avatar-placeholder">
+                    {{ topic.author.username|first|upper }}
+                </div>
+
+            {% endif %}
 
             <div>
-                {{ topic.text|linebreaks }}
+
+                <strong>
+                    {{ topic.author.username }}
+                </strong>
+
+                <div class="forum-message-date">
+                    {{ topic.created_at|date:"d.m.Y H:i" }}
+                </div>
+
             </div>
+
+        </div>
+
+
+        <div class="forum-message-text">
+
+            {{ topic.text|linebreaks }}
 
         </div>
 
     </div>
 
 
-    <h3 class="mb-3">
-        Повідомлення
-    </h3>
+    <!-- ЗАГОЛОВОК ОТВЕТОВ -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h3 class="mb-0">
+            Повідомлення
+        </h3>
+
+        {% if user.is_authenticated %}
+
+            <a
+                href="{% url 'forum:message_create' topic.pk %}"
+                class="btn btn-primary"
+            >
+                Додати повідомлення
+            </a>
+
+        {% endif %}
+
+    </div>
 
 
+    <!-- СООБЩЕНИЯ -->
     {% for message in topic.messages.all %}
 
-        <div class="card mb-3">
+        <div class="forum-message mb-3">
 
-            <div class="card-body">
+            <div class="forum-message-header">
 
-                <div
-                    class="d-flex justify-content-between align-items-center"
-                >
+                <div class="forum-message-user">
 
-                    <strong>
-                        {{ message.author.username }}
-                    </strong>
+                    {% if message.author.profile.avatar %}
 
-                    <small class="text-muted">
-                        {{ message.created_at|date:"d.m.Y H:i" }}
-                    </small>
+                        <img
+                            src="{{ message.author.profile.avatar.url }}"
+                            alt="{{ message.author.username }}"
+                            class="forum-avatar"
+                        >
 
-                </div>
+                    {% else %}
 
-                <hr>
+                        <div class="forum-avatar-placeholder">
+                            {{ message.author.username|first|upper }}
+                        </div>
 
-                <div>
-                    {{ message.text|linebreaks }}
+                    {% endif %}
+
+                    <div>
+
+                        <strong>
+                            {{ message.author.username }}
+                        </strong>
+
+                        <div class="forum-message-date">
+                            {{ message.created_at|date:"d.m.Y H:i" }}
+                        </div>
+
+                    </div>
+
                 </div>
 
 
                 {% if user.is_authenticated %}
 
-                    {% if message.author == user or user.is_staff or user.is_superuser %}
+                    {% if message.author == user or can_moderate %}
 
-                        <div class="mt-3">
+                        <div class="forum-message-actions">
 
                             <a
                                 href="{% url 'forum:message_edit' message.pk %}"
@@ -108,36 +170,38 @@
 
             </div>
 
+
+            <div class="forum-message-text">
+
+                {{ message.text|linebreaks }}
+
+            </div>
+
         </div>
+
 
     {% empty %}
 
         <div class="alert alert-secondary">
+
             У цій темі ще немає відповідей.
+
         </div>
 
     {% endfor %}
 
 
-    {% if user.is_authenticated %}
-
-        <div class="mt-4">
-
-            <a
-                href="{% url 'forum:message_create' topic.pk %}"
-                class="btn btn-primary"
-            >
-                Додати повідомлення
-            </a>
-
-        </div>
-
-    {% else %}
+    <!-- ГОСТЬ -->
+    {% if not user.is_authenticated %}
 
         <div class="alert alert-info mt-4">
+
             Щоб залишити повідомлення,
-            <a href="{% url 'login' %}">увійдіть</a>
+            <a href="{% url 'login' %}">
+                увійдіть
+            </a>
             до системи.
+
         </div>
 
     {% endif %}

@@ -562,3 +562,459 @@ a {
         font-size: 18px;
     }
 }
+
+/* =========================
+   FORUM
+========================= */
+
+.forum-page {
+    max-width: 1100px;
+}
+
+.forum-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 30px;
+}
+
+.forum-title {
+    margin-bottom: 5px;
+
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.forum-subtitle {
+    margin: 0;
+
+    color: #6c757d;
+}
+
+
+/* СПИСОК ТЕМ */
+
+.forum-topic-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.forum-topic-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border-radius: 16px;
+
+    background-color: #ffffff;
+
+    color: #212529;
+
+    text-decoration: none;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+
+    transition: 0.2s;
+}
+
+.forum-topic-card:hover {
+    color: #212529;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+}
+
+.forum-topic-title {
+    margin-bottom: 10px;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.forum-topic-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px 20px;
+
+    font-size: 14px;
+
+    color: #6c757d;
+}
+
+
+/* КОЛИЧЕСТВО СООБЩЕНИЙ */
+
+.forum-topic-count {
+    min-width: 90px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 4px;
+
+    color: #6c757d;
+}
+
+.forum-topic-count .badge {
+    min-width: 38px;
+
+    padding: 7px 10px;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   FORUM MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .forum-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .forum-header .btn {
+        width: 100%;
+    }
+
+    .forum-title {
+        font-size: 32px;
+    }
+
+    .forum-topic-card {
+        align-items: flex-start;
+
+        padding: 18px;
+    }
+
+    .forum-topic-count {
+        min-width: 70px;
+    }
+}
+
+
+@media (max-width: 576px) {
+
+    .forum-title {
+        font-size: 28px;
+    }
+
+    .forum-topic-card {
+        flex-direction: column;
+    }
+
+    .forum-topic-count {
+        flex-direction: row;
+        align-items: center;
+
+        min-width: auto;
+    }
+}
+
+/* =========================
+   FORUM TOPIC
+========================= */
+
+.forum-topic-header h1 {
+    margin-bottom: 10px;
+
+    font-size: 36px;
+    font-weight: 700;
+}
+
+
+/* СООБЩЕНИЕ */
+
+.forum-message {
+    padding: 22px;
+
+    border: 1px solid #e7e9ed;
+    border-radius: 16px;
+
+    background-color: #ffffff;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.forum-first-message {
+    border-left: 4px solid #0d6efd;
+}
+
+
+/* ВЕРХ СООБЩЕНИЯ */
+
+.forum-message-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+/* ПОЛЬЗОВАТЕЛЬ */
+
+.forum-message-user {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* АВАТАР */
+
+.forum-avatar,
+.forum-avatar-placeholder {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+}
+
+.forum-avatar {
+    object-fit: cover;
+}
+
+.forum-avatar-placeholder {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: #0d6efd;
+
+    color: #ffffff;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+/* ДАТА */
+
+.forum-message-date {
+    margin-top: 2px;
+
+    color: #6c757d;
+
+    font-size: 13px;
+}
+
+
+/* ТЕКСТ */
+
+.forum-message-text {
+    font-size: 16px;
+
+    line-height: 1.7;
+
+    word-break: break-word;
+}
+
+.forum-message-text p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* КНОПКИ */
+
+.forum-message-actions {
+    display: flex;
+
+    gap: 8px;
+}
+
+
+/* =========================
+   FORUM TOPIC MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .forum-topic-header h1 {
+        font-size: 30px;
+    }
+
+    .forum-message-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .forum-message-actions {
+        width: 100%;
+    }
+
+    .forum-message-actions .btn {
+        flex: 1;
+    }
+}
+
+
+@media (max-width: 576px) {
+
+    .forum-topic-header h1 {
+        font-size: 26px;
+    }
+
+    .forum-message {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .forum-avatar,
+    .forum-avatar-placeholder {
+        width: 42px;
+        height: 42px;
+    }
+
+    .forum-message-text {
+        font-size: 15px;
+    }
+
+    .forum-message-actions {
+        flex-direction: column;
+    }
+
+    .forum-message-actions .btn {
+        width: 100%;
+    }
+}
+
+/* =========================
+   FORUM FORMS
+========================= */
+
+.forum-form-card {
+    border: none;
+    border-radius: 18px;
+
+    background-color: #ffffff;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.forum-form-card h2 {
+    font-weight: 700;
+}
+
+
+/* INPUT И TEXTAREA */
+
+.forum-form-card input,
+.forum-form-card textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+
+    transition: 0.2s;
+}
+
+.forum-form-card input {
+    min-height: 48px;
+}
+
+.forum-form-card textarea {
+    min-height: 180px;
+
+    resize: vertical;
+}
+
+.forum-form-card input:focus,
+.forum-form-card textarea:focus {
+    border-color: #86b7fe;
+
+    outline: none;
+
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+
+/* КНОПКИ ФОРМ */
+
+.forum-form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 576px) {
+
+    .forum-form-card .card-body {
+        padding: 22px !important;
+    }
+
+    .forum-form-card textarea {
+        min-height: 150px;
+    }
+
+    .forum-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .forum-form-actions .btn {
+        width: 100%;
+    }
+}
+
+/* =========================
+   DELETE MESSAGE
+========================= */
+
+.forum-delete-card {
+    border: none;
+    border-radius: 18px;
+
+    background-color: #ffffff;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.forum-delete-card h2 {
+    font-weight: 700;
+}
+
+.forum-delete-message {
+    padding: 18px;
+
+    border-left: 4px solid #dc3545;
+    border-radius: 10px;
+
+    background-color: #f8f9fa;
+
+    line-height: 1.6;
+
+    word-break: break-word;
+}

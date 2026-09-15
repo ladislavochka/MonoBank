@@ -4,8 +4,6 @@ from .views import (
     HomeView,
     NewsListView,
     NewsDetailView,
-    EventListView,
-    EventDetailView,
     AnnouncementListView,
     AnnouncementDetailView,
     MaterialListView,
@@ -31,18 +29,6 @@ urlpatterns = [
         'news/<int:pk>/',
         NewsDetailView.as_view(),
         name='news_detail'
-    ),
-
-    path(
-        'events/',
-        EventListView.as_view(),
-        name='event_list'
-    ),
-
-    path(
-        'events/<int:pk>/',
-        EventDetailView.as_view(),
-        name='event_detail'
     ),
 
     path(

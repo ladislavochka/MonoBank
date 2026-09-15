@@ -8,11 +8,12 @@ from django.views.generic import (
 
 from .models import (
     News,
-    Event,
     Announcement,
     Material,
     Grade,
 )
+
+from events.models import Event
 
 
 class HomeView(TemplateView):
@@ -28,9 +29,9 @@ class HomeView(TemplateView):
         )[:3]
 
         context['events'] = Event.objects.filter(
-            date__gte=now
+            start_at__gte=now
         ).order_by(
-            'date'
+            'start_at'
         )[:3]
 
         context['announcements'] = Announcement.objects.order_by(
@@ -50,7 +51,9 @@ class NewsListView(ListView):
     context_object_name = 'news'
 
     def get_queryset(self):
-        return News.objects.order_by('-created_at')
+        return News.objects.order_by(
+            '-created_at'
+        )
 
 
 class NewsDetailView(DetailView):
@@ -59,28 +62,15 @@ class NewsDetailView(DetailView):
     context_object_name = 'news'
 
 
-class EventListView(ListView):
-    model = Event
-    template_name = 'core/event_list.html'
-    context_object_name = 'events'
-
-    def get_queryset(self):
-        return Event.objects.order_by('date')
-
-
-class EventDetailView(DetailView):
-    model = Event
-    template_name = 'core/event_detail.html'
-    context_object_name = 'event'
-
-
 class AnnouncementListView(ListView):
     model = Announcement
     template_name = 'core/announcement_list.html'
     context_object_name = 'announcements'
 
     def get_queryset(self):
-        return Announcement.objects.order_by('-created_at')
+        return Announcement.objects.order_by(
+            '-created_at'
+        )
 
 
 class AnnouncementDetailView(DetailView):
@@ -95,7 +85,9 @@ class MaterialListView(ListView):
     context_object_name = 'materials'
 
     def get_queryset(self):
-        return Material.objects.order_by('-created_at')
+        return Material.objects.order_by(
+            '-created_at'
+        )
 
 
 class MaterialDetailView(DetailView):
@@ -119,7 +111,10 @@ class GradeListView(LoginRequiredMixin, ListView):
                 student=self.request.user
             )
 
-        subject = self.request.GET.get('subject', '').strip()
+        subject = self.request.GET.get(
+            'subject',
+            ''
+        ).strip()
 
         if subject:
             queryset = queryset.filter(
@@ -165,11 +160,17 @@ class GradeListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
 
         context['selected_subject'] = (
-            self.request.GET.get('subject', '')
+            self.request.GET.get(
+                'subject',
+                ''
+            )
         )
 
         context['selected_student'] = (
-            self.request.GET.get('student', '')
+            self.request.GET.get(
+                'student',
+                ''
+            )
         )
 
         context['selected_sort'] = (

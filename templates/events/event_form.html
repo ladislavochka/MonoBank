@@ -1,0 +1,160 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}
+        Редагування події
+    {% else %}
+        Створення події
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <h1 class="mb-4">
+                {% if object %}
+                    Редагування події
+                {% else %}
+                    Створення події
+                {% endif %}
+            </h1>
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Назва події
+                    </label>
+
+                    {{ form.title }}
+
+                    {% if form.title.errors %}
+                        <div class="text-danger">
+                            {{ form.title.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Опис
+                    </label>
+
+                    {{ form.description }}
+
+                    {% if form.description.errors %}
+                        <div class="text-danger">
+                            {{ form.description.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Дата та час початку
+                        </label>
+
+                        {{ form.start_at }}
+
+                        {% if form.start_at.errors %}
+                            <div class="text-danger">
+                                {{ form.start_at.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Дата та час завершення
+                        </label>
+
+                        {{ form.end_at }}
+
+                        {% if form.end_at.errors %}
+                            <div class="text-danger">
+                                {{ form.end_at.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Місце проведення
+                    </label>
+
+                    {{ form.location }}
+
+                    {% if form.location.errors %}
+                        <div class="text-danger">
+                            {{ form.location.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Організатор
+                    </label>
+
+                    {{ form.organizer }}
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">
+                        Онлайн-посилання
+                    </label>
+
+                    {{ form.online_url }}
+
+                    {% if form.online_url.errors %}
+                        <div class="text-danger">
+                            {{ form.online_url.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    {% if object %}
+                        Зберегти зміни
+                    {% else %}
+                        Створити подію
+                    {% endif %}
+                </button>
+
+                <a
+                    href="{% url 'event_list' %}"
+                    class="btn btn-secondary"
+                >
+                    Скасувати
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

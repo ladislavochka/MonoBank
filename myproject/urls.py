@@ -40,7 +40,13 @@ urlpatterns = [
         'forum/',
         include('forum.urls')
     ),
+
+    path(
+        'events/',
+        include('events.urls')
+    ),
 ]
+
 
 
 if settings.DEBUG:

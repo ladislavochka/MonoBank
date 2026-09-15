@@ -1,0 +1,349 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Події та календар
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1>
+                Події та календар
+            </h1>
+
+            <p class="text-muted mb-0">
+                Розклад подій групи
+            </p>
+        </div>
+
+        {% if can_manage_events %}
+
+            <a
+                href="{% url 'event_create' %}"
+                class="btn btn-primary"
+            >
+                + Додати подію
+            </a>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- КАЛЕНДАР -->
+
+    <div class="card shadow-sm mb-5">
+
+        <div class="card-body">
+
+            <h3 class="mb-4 text-center">
+                {{ calendar_month_name }}
+                {{ calendar_year }}
+            </h3>
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered text-center">
+
+                    <thead>
+                        <tr>
+                            <th>Пн</th>
+                            <th>Вт</th>
+                            <th>Ср</th>
+                            <th>Чт</th>
+                            <th>Пт</th>
+                            <th>Сб</th>
+                            <th>Нд</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for week in calendar_data %}
+
+                            <tr>
+
+                                {% for day in week %}
+
+                                    <td
+                                        style="height: 100px; vertical-align: top;"
+                                    >
+
+                                        {% if day != 0 %}
+
+                                            <div class="fw-bold mb-2">
+                                                {{ day }}
+                                            </div>
+
+                                            {% if events_by_day.day %}
+
+                                                {% for event in events_by_day.day %}
+
+                                                    <a
+                                                        href="{{ event.get_absolute_url }}"
+                                                        class="d-block small text-decoration-none"
+                                                    >
+                                                        {{ event.start_at|date:"H:i" }}
+                                                        {{ event.title }}
+                                                    </a>
+
+                                                {% endfor %}
+
+                                            {% endif %}
+
+                                            {% for event_day, day_events in events_by_day.items %}
+
+                                                {% if event_day == day %}
+
+                                                    {% for event in day_events %}
+
+                                                        <a
+                                                            href="{{ event.get_absolute_url }}"
+                                                            class="d-block small text-decoration-none mb-1"
+                                                        >
+                                                            {{ event.start_at|date:"H:i" }}
+                                                            — {{ event.title }}
+                                                        </a>
+
+                                                    {% endfor %}
+
+                                                {% endif %}
+
+                                            {% endfor %}
+
+                                        {% endif %}
+
+                                    </td>
+
+                                {% endfor %}
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- МАЙБУТНІ ПОДІЇ -->
+
+    <section class="mb-5">
+
+        <h2 class="mb-3">
+            Майбутні події
+        </h2>
+
+        {% if future_events %}
+
+            <div class="row">
+
+                {% for event in future_events %}
+
+                    <div class="col-md-6 col-lg-4 mb-4">
+
+                        <div class="card h-100 shadow-sm">
+
+                            <div class="card-body">
+
+                                <span class="badge bg-success mb-2">
+                                    Майбутня
+                                </span>
+
+                                <h4 class="card-title">
+                                    {{ event.title }}
+                                </h4>
+
+                                <p class="mb-1">
+                                    <strong>Дата:</strong>
+                                    {{ event.start_at|date:"d.m.Y" }}
+                                </p>
+
+                                <p class="mb-1">
+                                    <strong>Час:</strong>
+                                    {{ event.start_at|date:"H:i" }}
+                                </p>
+
+                                <p class="mb-3">
+                                    <strong>Місце:</strong>
+                                    {{ event.location }}
+                                </p>
+
+                                <a
+                                    href="{{ event.get_absolute_url }}"
+                                    class="btn btn-outline-primary"
+                                >
+                                    Детальніше
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="text-muted">
+                Майбутніх подій немає.
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- СЬОГОДНІ -->
+
+    <section class="mb-5">
+
+        <h2 class="mb-3">
+            Сьогодні
+        </h2>
+
+        {% if today_events %}
+
+            <div class="row">
+
+                {% for event in today_events %}
+
+                    <div class="col-md-6 col-lg-4 mb-4">
+
+                        <div class="card h-100 border-warning shadow-sm">
+
+                            <div class="card-body">
+
+                                <span class="badge bg-warning text-dark mb-2">
+                                    Сьогодні
+                                </span>
+
+                                <h4 class="card-title">
+                                    {{ event.title }}
+                                </h4>
+
+                                <p>
+                                    <strong>Час:</strong>
+                                    {{ event.start_at|date:"H:i" }}
+                                </p>
+
+                                <p>
+                                    <strong>Місце:</strong>
+                                    {{ event.location }}
+                                </p>
+
+                                <a
+                                    href="{{ event.get_absolute_url }}"
+                                    class="btn btn-outline-primary"
+                                >
+                                    Детальніше
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="text-muted">
+                На сьогодні подій немає.
+            </p>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- МИНУЛІ -->
+
+    <section>
+
+        <h2 class="mb-3">
+            Минулі події
+        </h2>
+
+        {% if past_events %}
+
+            <div class="row">
+
+                {% for event in past_events %}
+
+                    <div class="col-md-6 col-lg-4 mb-4">
+
+                        <div class="card h-100 shadow-sm">
+
+                            <div class="card-body">
+
+                                <span class="badge bg-secondary mb-2">
+                                    Минуло
+                                </span>
+
+                                <h4 class="card-title">
+                                    {{ event.title }}
+                                </h4>
+
+                                <p>
+                                    <strong>Дата:</strong>
+                                    {{ event.start_at|date:"d.m.Y" }}
+                                </p>
+
+                                <p>
+                                    <strong>Час:</strong>
+                                    {{ event.start_at|date:"H:i" }}
+                                </p>
+
+                                <p>
+                                    <strong>Місце:</strong>
+                                    {{ event.location }}
+                                </p>
+
+                                <a
+                                    href="{{ event.get_absolute_url }}"
+                                    class="btn btn-outline-secondary"
+                                >
+                                    Детальніше
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <p class="text-muted">
+                Минуліх подій немає.
+            </p>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+{% endblock %}

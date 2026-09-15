@@ -1,0 +1,62 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Видалення події
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4 text-center">
+
+                    <h2 class="mb-3">
+                        Видалити подію?
+                    </h2>
+
+                    <p>
+                        Ви дійсно хочете видалити:
+                    </p>
+
+                    <h4 class="mb-4">
+                        {{ object.title }}
+                    </h4>
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger"
+                        >
+                            Так, видалити
+                        </button>
+
+                        <a
+                            href="{{ object.get_absolute_url }}"
+                            class="btn btn-secondary"
+                        >
+                            Скасувати
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

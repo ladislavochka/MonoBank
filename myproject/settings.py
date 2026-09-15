@@ -11,6 +11,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,7 +23,11 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'core',
     'forum',
+    'events.apps.EventsConfig',
 ]
+
+
+
 
 
 MIDDLEWARE = [

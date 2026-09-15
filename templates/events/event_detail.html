@@ -1,122 +1,137 @@
-
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ event.title }}
+{{ event.title }} | MonoBank
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<div class="container py-5 event-detail-page">
 
-    <div class="row justify-content-center">
+    <!-- НАВИГАЦИЯ -->
+    <div class="mb-4">
 
-        <div class="col-lg-9">
+        <a href="{% url 'event_list' %}"
+           class="btn btn-outline-secondary">
+            ← До всіх подій
+        </a>
 
-            <div class="card shadow-sm">
+    </div>
 
-                <div class="card-body p-4">
 
-                    <h1 class="mb-4">
-                        {{ event.title }}
-                    </h1>
+    <!-- ОСНОВНОЙ БЛОК -->
+    <div class="card event-detail-card">
 
-                    {% if event.is_today %}
-                        <span class="badge bg-warning text-dark mb-3">
-                            Сьогодні
-                        </span>
-                    {% elif event.is_future %}
-                        <span class="badge bg-success mb-3">
-                            Майбутня подія
-                        </span>
-                    {% else %}
-                        <span class="badge bg-secondary mb-3">
-                            Минуло
-                        </span>
-                    {% endif %}
+        <div class="card-body p-4 p-md-5">
 
-                    <hr>
+            <!-- СТАТУС -->
+            <div class="mb-3">
 
-                    <p>
-                        <strong>Опис:</strong>
-                    </p>
+                {% if event.is_past %}
 
-                    <p>
-                        {{ event.description|linebreaks }}
-                    </p>
+                    <span class="badge bg-secondary">
+                        Подія завершена
+                    </span>
 
-                    <p>
-                        <strong>Дата:</strong>
+                {% else %}
+
+                    <span class="badge bg-success">
+                        Майбутня подія
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- НАЗВАНИЕ -->
+            <h1 class="event-detail-title">
+                {{ event.title }}
+            </h1>
+
+
+            <!-- ИНФОРМАЦИЯ -->
+            <div class="event-detail-info">
+
+                <div class="event-detail-info-item">
+
+                    <span class="event-detail-label">
+                        Дата
+                    </span>
+
+                    <strong>
                         {{ event.start_at|date:"d.m.Y" }}
-                    </p>
+                    </strong>
 
-                    <p>
-                        <strong>Початок:</strong>
+                </div>
+
+
+                <div class="event-detail-info-item">
+
+                    <span class="event-detail-label">
+                        Час
+                    </span>
+
+                    <strong>
+
                         {{ event.start_at|date:"H:i" }}
-                    </p>
 
-                    {% if event.end_at %}
-                        <p>
-                            <strong>Завершення:</strong>
-                            {{ event.end_at|date:"d.m.Y H:i" }}
-                        </p>
-                    {% endif %}
+                        {% if event.end_at %}
+                            – {{ event.end_at|date:"H:i" }}
+                        {% endif %}
 
-                    <p>
-                        <strong>Місце:</strong>
+                    </strong>
+
+                </div>
+
+
+                <div class="event-detail-info-item">
+
+                    <span class="event-detail-label">
+                        Місце
+                    </span>
+
+                    <strong>
                         {{ event.location }}
-                    </p>
-
-                    {% if event.organizer %}
-                        <p>
-                            <strong>Організатор:</strong>
-                            {{ event.organizer.username }}
-                        </p>
-                    {% endif %}
-
-                    {% if event.online_url %}
-                        <p>
-                            <strong>Онлайн-подія:</strong>
-                            <a
-                                href="{{ event.online_url }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Перейти за посиланням
-                            </a>
-                        </p>
-                    {% endif %}
-
-                    <hr>
-
-                    <a
-                        href="{% url 'event_list' %}"
-                        class="btn btn-secondary"
-                    >
-                        ← До подій
-                    </a>
-
-                    {% if can_manage_events %}
-
-                        <a
-                            href="{% url 'event_edit' event.pk %}"
-                            class="btn btn-warning"
-                        >
-                            Редагувати
-                        </a>
-
-                        <a
-                            href="{% url 'event_delete' event.pk %}"
-                            class="btn btn-danger"
-                        >
-                            Видалити
-                        </a>
-
-                    {% endif %}
+                    </strong>
 
                 </div>
 
             </div>
+
+
+            <!-- ОПИСАНИЕ -->
+            <div class="event-detail-description">
+
+                <h3>
+                    Про подію
+                </h3>
+
+                <div class="event-detail-text">
+                    {{ event.description|linebreaks }}
+                </div>
+
+            </div>
+
+
+            <!-- КНОПКИ УПРАВЛЕНИЯ -->
+            {% if can_manage_events %}
+
+                <div class="event-detail-actions">
+
+                    <a href="{% url 'event_edit' event.pk %}"
+                       class="btn btn-outline-primary">
+                        Редагувати
+                    </a>
+
+                    <a href="{% url 'event_delete' event.pk %}"
+                       class="btn btn-outline-danger">
+                        Видалити
+                    </a>
+
+                </div>
+
+            {% endif %}
 
         </div>
 
@@ -125,4 +140,3 @@
 </div>
 
 {% endblock %}
-

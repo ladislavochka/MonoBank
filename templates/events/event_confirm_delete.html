@@ -1,57 +1,58 @@
-
 {% extends 'base.html' %}
 
 {% block title %}
-    Видалення події
+Видалення події | MonoBank
 {% endblock %}
 
 {% block content %}
 
-<div class="container py-5">
+<div class="container py-5 event-delete-page">
 
-    <div class="row justify-content-center">
+    <div class="card event-delete-card">
 
-        <div class="col-lg-6">
+        <div class="card-body p-4 p-md-5 text-center">
 
-            <div class="card shadow-sm">
+            <div class="event-delete-icon">
+                !
+            </div>
 
-                <div class="card-body p-4 text-center">
+            <h1 class="event-delete-title">
+                Видалити подію?
+            </h1>
 
-                    <h2 class="mb-3">
-                        Видалити подію?
-                    </h2>
+            <p class="event-delete-text">
+                Ви дійсно хочете видалити подію
+                <strong>«{{ event.title }}»</strong>?
+            </p>
 
-                    <p>
-                        Ви дійсно хочете видалити:
-                    </p>
+            <p class="text-muted">
+                Цю дію неможливо скасувати.
+            </p>
 
-                    <h4 class="mb-4">
-                        {{ object.title }}
-                    </h4>
 
-                    <form method="post">
+            <form method="post">
 
-                        {% csrf_token %}
+                {% csrf_token %}
 
-                        <button
-                            type="submit"
-                            class="btn btn-danger"
-                        >
-                            Так, видалити
-                        </button>
+                <div class="event-delete-actions">
 
-                        <a
-                            href="{{ object.get_absolute_url }}"
-                            class="btn btn-secondary"
-                        >
-                            Скасувати
-                        </a>
+                    <button
+                        type="submit"
+                        class="btn btn-danger"
+                    >
+                        Так, видалити
+                    </button>
 
-                    </form>
+                    <a
+                        href="{% url 'event_detail' event.pk %}"
+                        class="btn btn-outline-secondary"
+                    >
+                        Скасувати
+                    </a>
 
                 </div>
 
-            </div>
+            </form>
 
         </div>
 
